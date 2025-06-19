@@ -59,17 +59,26 @@ export default function MapboxMap({ selectedCity }: MapboxMapProps) {
         );
 
         const today = res.data.list[0];
-        const tomorrow = res.data.list[8]; 
+        const tomorrow = res.data.list[8];
 
         const html = `
-          <h3 style="font-weight: bold; margin-bottom: 5px;">${selectedCity.name}</h3>
-          <p>🌤️ <strong>Today:</strong> ${today.main.temp}°C, ${today.weather[0].description}</p>
-          <p>🌦️ <strong>Tomorrow:</strong> ${tomorrow.main.temp}°C, ${tomorrow.weather[0].description}</p>
+          <div style="
+            background-color: #1f2937;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            max-width: 200px;
+          ">
+            <h3 style="font-weight: bold; margin-bottom: 5px;">${selectedCity.name}</h3>
+            <p>🌤️ <strong>Today:</strong> ${today.main.temp}°C, ${today.weather[0].description}</p>
+            <p>🌦️ <strong>Tomorrow:</strong> ${tomorrow.main.temp}°C, ${tomorrow.weather[0].description}</p>
+          </div>
         `;
 
         if (popup.current) popup.current.remove();
 
-        popup.current = new mapboxgl.Popup()
+        popup.current = new mapboxgl.Popup({ offset: 25 })
           .setLngLat([lon, lat])
           .setHTML(html)
           .addTo(map.current!);
