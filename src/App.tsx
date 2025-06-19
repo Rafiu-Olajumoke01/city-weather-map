@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Sidebar from "./components/sidebar/Sidebar";
+import MapboxMap from "./components/MapboxMap/MapboxMap";
+
+interface City {
+  name: string;
+  lat: number;
+  lon: number;
+}
 
 function App() {
+  const [selectedCity, setSelectedCity] = useState<City | null>(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ display: "flex" }}>
+      <Sidebar onSelectCity={setSelectedCity} />
+      <main style={{ flex: 1, padding: "2rem" }}>
+        {selectedCity ? (
+          <>
+            <h2>{selectedCity.name}</h2>
+            <p>Latitude: {selectedCity.lat}</p>
+            <p>Longitude: {selectedCity.lon}</p>
+            <MapboxMap selectedCity={selectedCity} />
+          </>
+        ) : (
+          <p>Select a city to view map and weather info</p>
+        )}
+      </main>
     </div>
   );
 }
