@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
 import MapboxMap from "./components/MapboxMap/MapboxMap";
+import "./App.css"; 
 
 interface City {
   name: string;
@@ -12,12 +13,17 @@ function App() {
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
 
   return (
-    <div style={{ display: "flex" }}>
-      <Sidebar onSelectCity={setSelectedCity} />
-      <main style={{ flex: 1, padding: "2rem" }}>
+    <div className="app-container">
+      {/* Sidebar */}
+      <div className="sidebar">
+        <Sidebar onSelectCity={setSelectedCity} />
+      </div>
+
+      {/* Main Content */}
+      <main className="main-content">
         {selectedCity ? (
           <>
-            <h2>{selectedCity.name}</h2>
+            <h2 className="city-name">{selectedCity.name}</h2>
             <p>Latitude: {selectedCity.lat}</p>
             <p>Longitude: {selectedCity.lon}</p>
             <MapboxMap selectedCity={selectedCity} />
